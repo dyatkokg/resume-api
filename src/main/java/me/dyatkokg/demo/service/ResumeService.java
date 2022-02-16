@@ -1,10 +1,15 @@
 package me.dyatkokg.demo.service;
 
 import lombok.RequiredArgsConstructor;
+import me.dyatkokg.demo.entity.PersonalData;
 import me.dyatkokg.demo.entity.Resume;
 import me.dyatkokg.demo.repo.ResumeRepo;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -37,4 +42,15 @@ public class ResumeService {
             return ResponseEntity.notFound().build();
     }
 
+
+    @EventListener
+    public void onApplicationReady(ApplicationReadyEvent event){
+        Resume resume = new Resume();
+        PersonalData personalData = new PersonalData();
+        personalData.setFirstName("karisha");
+        personalData.setLastName("dyatko");
+        personalData.setBirthday(LocalDate.of(1997,8,1));
+        resume.setData(personalData);
+        resumeRepo.save(resume);
+    }
 }

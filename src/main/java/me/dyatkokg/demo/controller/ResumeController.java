@@ -32,4 +32,11 @@ public class ResumeController {
         return resumeService.update(resume);
     }
 
+
+    //создать обьект
+    //проверить контролеры
+    //собственные исключения создац
+    //постраничность!
+    //логирование
+    //
 }
