@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import me.dyatkokg.demo.dto.ResumeDTO;
 import me.dyatkokg.demo.entity.PersonalData;
 import me.dyatkokg.demo.entity.Resume;
+import me.dyatkokg.demo.exceptions.ResumeNotFoundException;
 import me.dyatkokg.demo.mapper.ResumeMapper;
 import me.dyatkokg.demo.repo.ResumeRepo;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +35,7 @@ public class ResumeService {
         return resumeRepo.findById(id)
                 .map(mapper::toDTO)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(()->new ResumeNotFoundException(id));
     }
 
     public ResponseEntity<ResumeDTO> deleteById(String id) {
