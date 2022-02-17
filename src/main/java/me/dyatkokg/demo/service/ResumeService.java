@@ -1,21 +1,16 @@
 package me.dyatkokg.demo.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import me.dyatkokg.demo.dto.ResumeDTO;
-import me.dyatkokg.demo.entity.PersonalData;
-import me.dyatkokg.demo.entity.Resume;
+import me.dyatkokg.demo.exceptions.FieldEmptiesException;
 import me.dyatkokg.demo.exceptions.ResumeNotFoundException;
 import me.dyatkokg.demo.mapper.ResumeMapper;
 import me.dyatkokg.demo.repo.ResumeRepo;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,7 +23,9 @@ public class ResumeService {
 
 
     public ResponseEntity<ResumeDTO> create(ResumeDTO resume) {
-        return ResponseEntity.ok(mapper.toDTO(resumeRepo.save(mapper.toEntity(resume))));
+        if(Objects.nonNull(resume.getData())&&Objects.nonNull(resume.getContacts())) {
+            return ResponseEntity.ok(mapper.toDTO(resumeRepo.save(mapper.toEntity(resume)))) ;
+        }else throw new FieldEmptiesException();
     }
 
     public ResponseEntity<ResumeDTO> getById(String id) {

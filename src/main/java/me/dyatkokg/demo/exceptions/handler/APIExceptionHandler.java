@@ -1,6 +1,7 @@
 package me.dyatkokg.demo.exceptions.handler;
 
 import lombok.extern.slf4j.Slf4j;
+import me.dyatkokg.demo.exceptions.FieldEmptiesException;
 import me.dyatkokg.demo.exceptions.ResumeNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,6 +15,12 @@ public class APIExceptionHandler {
     public ResponseEntity<Object> handleResumeNotFound(ResumeNotFoundException exception) {
         log.error(exception.getMessage());
         return ResponseEntity.noContent().build();
+    }
+
+    @ExceptionHandler({FieldEmptiesException.class})
+    public ResponseEntity<Object> handleFieldEmpty(FieldEmptiesException exception) {
+        log.error(exception.getMessage());
+        return ResponseEntity.badRequest().build();
     }
 
 }
