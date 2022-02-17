@@ -14,7 +14,7 @@ public class APIExceptionHandler {
     @ExceptionHandler({ResumeNotFoundException.class})
     public ResponseEntity<Object> handleResumeNotFound(ResumeNotFoundException exception) {
         log.error(exception.getMessage());
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.notFound().build();
     }
 
     @ExceptionHandler({FieldEmptiesException.class})

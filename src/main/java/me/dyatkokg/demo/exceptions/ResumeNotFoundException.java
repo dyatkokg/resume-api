@@ -6,4 +6,7 @@ public class ResumeNotFoundException extends RuntimeException{
         super(String.format("Resume with id %s was not found", id));
     }
 
+    public ResumeNotFoundException(){
+        super("Resume was not found");
+    }
 }
