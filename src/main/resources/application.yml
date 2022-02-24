@@ -1,4 +1,17 @@
 spring:
+  application:
+    name: resume-api
+  profiles:
+    active: development
+  config:
+    import:
+      optional:
+        configserver: http://localhost:8080
+  cloud:
+    config:
+      fail-fast: true
   data:
     mongodb:
       uri: mongodb://localhost:27017/Resume_App
+server:
+  port: 8081
